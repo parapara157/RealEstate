@@ -98,3 +98,19 @@ def deleteOutlier(data):
         except KeyError:
             break
     return data
+
+###전판매가 5배 이상인거 삭제 
+def deleteOutlier2(data):
+    i=0
+    while(True):
+        try:
+            if (data["단지명"][i]==data["단지명"][i+1]) and (data["전용면적(㎡)"][i]==data["전용면적(㎡)"][i+1]) and (data["층"][i]==data["층"][i+1]):
+                if data.iloc[i+1]["거래금액(만원)"]>data.iloc[i]["거래금액(만원)"]*5:
+                    data=data.drop(i+1,0)
+                    data=data.reset_index()
+                    del data["index"]
+                    continue
+            i=i+1
+        except KeyError:
+            break
+    return data
